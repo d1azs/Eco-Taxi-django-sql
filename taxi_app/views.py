@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Car
 from math import radians, sin, cos, sqrt, atan2
-import random  # Для генерації номерів
+import random
 
 # Координати адрес
 ADDRESS_COORDS = {
