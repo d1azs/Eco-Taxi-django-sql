@@ -1,0 +1,67 @@
+{% extends 'taxi_app/base.html' %}
+
+{% block title %}{% if is_preview %}Попередній перегляд{% else %}Замовлення сформовано{% endif %}{% endblock %}
+
+{% block content %}
+<div class="confirmation-container">
+    
+    <h1 style="text-align: center;">
+        {% if is_preview %}
+            Попередній перегляд
+        {% else %}
+            Замовлення сформовано ✅
+        {% endif %}
+    </h1> 
+    
+    {% if car %}
+        <div class="car-main-card card-image-overlay"> 
+            
+            <div class="card-background-image" style="background-image: url('{{ car.image_url }}');"></div>
+            
+            <div class="card-overlay-content"> 
+                <h3>{{ car.car_name }}</h3>
+                <p><strong>Клас:</strong> {{ car.car_class }} | <strong>Номер:</strong> {{ license_plate }}</p>
+                <p><strong>Ціна:</strong> {{ car.price_per_km }} грн/км</p>
+            </div>
+        </div>
+        
+        <div class="details-grid">
+            <div class="route-info-card {% if is_preview %}card-accent{% endif %}"> 
+                <h4>Ваш маршрут:</h4>
+                <p><strong>Від:</strong> {{ pickup_address }}</p>
+                <p><strong>До:</strong> {{ dropoff_address }}</p>
+                <hr>
+                <p><strong>Відстань:</strong> {{ distance|floatformat:2 }} км</p>
+                <p><strong>Час прибуття:</strong> {{ arrival_time }} хв</p>
+                <p><strong>Час поїздки:</strong> {{ trip_time }} хв</p>
+                
+                <h3 class="total-price">Загальна сума: {{ total_price|floatformat:2 }} грн</h3>
+            </div>
+            
+            <div class="map-card">
+                <h4>Маршрут на карті:</h4>
+                <img src="{{ maps_url }}" alt="Маршрут" class="map-image">
+            </div>
+        </div>
+        
+        <div class="home-button-container button-group">
+            {% if is_preview %}
+                
+                <a href="{% url 'cars' %}" class="button button-secondary">Повернутись назад</a>
+            
+                <form method="post" class="confirm-form"> 
+                    {% csrf_token %}
+                    <button type="submit" class="button">Підтвердити</button>
+                </form>
+                
+            {% else %}
+                <a href="{% url 'home' %}" class="btn btn-primary">На головну</a>
+            {% endif %}
+        </div>
+        
+    {% else %}
+        <p>Помилка: Автомобіль не обрано.</p>
+        <a href="{% url 'cars' %}" class="btn btn-secondary">До авто</a>
+    {% endif %}
+</div>
+{% endblock %}

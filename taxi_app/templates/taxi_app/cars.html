@@ -1,0 +1,74 @@
+{% extends 'taxi_app/base.html' %}
+
+{% block title %}Доступні авто{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Доступні авто</h1>
+    
+    <div class="filters">
+        <h3>Фільтр за класом:</h3>
+        
+        <a href="{% url 'cars' %}" 
+           class="filter-link {% if not request.GET.class %}active{% endif %}">
+           Всі
+        </a>
+        
+        {% for cls in classes %}
+            <a href="?class={{ cls }}" 
+               class="filter-link {% if request.GET.class == cls %}active{% endif %}">
+               {{ cls|title }}
+            </a>
+        {% endfor %}
+    </div>
+    
+    <div class="car-list">
+        {% for car in cars %}
+            <div class="card">
+                {% if car.image_url %}
+                    <img src="{{ car.image_url }}" alt="{{ car.car_name }}" width="200" onerror="this.src='https://via.placeholder.com/200';">
+                {% else %}
+                    <img src="https://via.placeholder.com/200" alt="No image" width="200">
+                {% endif %}
+                <h3>{{ car.car_name }}</h3>
+                <p>Клас: {{ car.car_class }}</p>
+                <p>Ціна за км: {{ car.price_per_km }} грн</p>
+                <p>Час прибуття: {{ car.arrival_time }} хвилин</p>
+                <p>{{ car.description }}</p>
+                <form action="{% url 'order' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected_car" value="{{ car.car_id }}">
+                    <button type="submit" class="button">Замовити</button>
+                </form>
+            </div>
+        {% empty %}
+            <div class="empty-state-container">
+                <div class="empty-state-emoji">😢</div>
+                <h3 class="empty-state-headline">Упс! Авто не знайдено</h3>
+                
+                {% if request.GET.class %}
+                    <p class="empty-state-text">
+                        Машин класу <strong>"{{ request.GET.class|title }}"</strong> у вашому радіусі не знайдено.<br>
+                        Спробуйте скористатись іншим класом або змінити адресу.
+                    </p>
+                    <div class="empty-state-actions">
+                        <a href="{% url 'cars' %}" class="button button-secondary">Показати всі класи</a>
+                        <a href="{% url 'order' %}" class="button">Змінити адресу</a>
+                    </div>
+                {% else %}
+                    <p class="empty-state-text">
+                        На жаль, немає доступних авто в радіусі 5 км від вашої адреси.<br>
+                        Спробуйте змінити адресу відправки.
+                    </p>
+                    <div class="empty-state-actions">
+                        <a href="{% url 'order' %}" class="button">Змінити адресу</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <p>Відстань між {{ pickup_address }} і {{ dropoff_address }}: {{ distance|floatformat:2 }} км</p>
+    <p>Орієнтовний час поїздки: {{ trip_time }} хвилин</p>
+    <a href="{% url 'order' %}" class="button button-secondary back-button">Повернутися назад</a>
+</div>
+{% endblock %}

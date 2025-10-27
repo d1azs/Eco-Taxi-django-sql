@@ -1,0 +1,28 @@
+{% extends 'taxi_app/base.html' %}
+
+{% block title %}Замовити{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Замовити таксі</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <label for="pickup_address">Адреса посадки:</label>
+            <input type="text" id="pickup_address" name="pickup_address" required class="custom-input">
+        </div>
+        
+        <div class="input-group">
+            <label for="dropoff_address">Адреса висадки:</label>
+            <input type="text" id="dropoff_address" name="dropoff_address" required class="custom-input">
+        </div>
+        
+        <button type="submit" class="button">Продовжити</button>
+    </form>
+    <p>Доступні адреси (приклад): Rynok Square, Lviv; Lviv Opera House, Lviv; тощо.</p>
+    <a href="{% url 'home' %}" class="back-button">Повернутися назад</a>
+</div>
+{% endblock %}

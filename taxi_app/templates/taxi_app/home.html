@@ -1,0 +1,61 @@
+{% extends 'taxi_app/base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1>МИ ДБАЄМО ПРО ДОВКІЛЛЯ - ТІЛЬКИ ЕЛЕКТРОМОБІЛІ!</h1>
+    <a href="{% url 'order' %}" class="button button-large">Замовити таксі</a>
+</div>
+
+<div class="features-section">
+    <h2>Чому ми?</h2>
+    <div class="features-grid">
+        
+        <div class="feature-card">
+            <span class="material-symbols-outlined">
+                energy_savings_leaf
+            </span>
+            <div class="feature-text">
+                <h3>Екологічність</h3>
+                <p>Екологічні машини зменшують забруднення повітря.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <span class="material-symbols-outlined">
+                quiet_time
+            </span>
+            <div class="feature-text">
+                <h3>Комфорт</h3>
+                <p>Низький рівень шуму — комфортніші поїздки.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <span class="material-symbols-outlined">
+                bolt
+            </span>
+            <div class="feature-text">
+                <h3>Економія</h3>
+                <p>Економія енергії та використання відновлюваних ресурсів.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <span class="material-symbols-outlined">
+                security
+            </span>
+            <div class="feature-text">
+                <h3>Технології</h3>
+                <p>Сучасні технології — безпека та швидкість замовлення.</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="about-link-section">
+    <a href="{% url 'about' %}">Дізнатися більше про нас</a>
+</div>
+{% endblock %}
