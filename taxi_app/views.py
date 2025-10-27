@@ -144,7 +144,7 @@ def order_confirmation(request):
                      random.choice(letters) + random.choice(letters))
     
  
-    maps_api_key = 'AIzaSyBrV8GbhIsUDiDJLt-vF6zrip0-PyViK6g'
+    maps_api_key = 'API KEY'
     maps_url = (f"https://maps.googleapis.com/maps/api/staticmap?"
                 f"size=400x300&path=color:0x0000ff|weight:5|"
                 f"{pickup_lat},{pickup_lon}|{dropoff_lat},{dropoff_lon}&"
