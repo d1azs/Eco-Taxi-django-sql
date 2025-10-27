@@ -3,7 +3,7 @@ from .models import Car
 from math import radians, sin, cos, sqrt, atan2
 import random  # Для генерації номерів
 
-# Координати адрес (додано на початок)
+# Координати адрес
 ADDRESS_COORDS = {
     'Rynok Square, Lviv': (49.841952, 24.0315921),
     'Lviv Opera House, Lviv': (49.8441, 24.0264),
